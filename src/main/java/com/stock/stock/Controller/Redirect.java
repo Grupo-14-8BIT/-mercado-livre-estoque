@@ -17,7 +17,7 @@ public class Redirect {
 
 
 @SneakyThrows
-@GetMapping
+@GetMapping("/redirect")
     public void getToken (
             @RequestParam("code") String code,
             @RequestParam("state") Integer state
@@ -26,12 +26,15 @@ public class Redirect {
 
     service.cadastra(code,state);
 
-
-
-
-
-
-
 }
 
+    @GetMapping("teste")
+    public void teste (
+
+
+    ) {
+
+        System.out.println("recebido");
+
+    }
 }
