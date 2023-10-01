@@ -18,6 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "usuario")
+
+// testar
 public class User implements UserDetails {
 
     @Id

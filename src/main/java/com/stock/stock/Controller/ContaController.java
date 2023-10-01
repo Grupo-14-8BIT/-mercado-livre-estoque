@@ -64,6 +64,14 @@ public class ContaController {
         return ResponseEntity.ok("https://auth.mercadolivre.com.br/authorization?response_type=code&client_id="+APP_ID+"&redirect_uri="+YOUR_URL+ "&state="+ user.get().getId());
     }
 
+    @GetMapping("/refresh")
+    public ResponseEntity<Conta> refresh (
+           @RequestParam Integer conta_id
+    ) {
+        System.out.println("refrescado:" + conta_id);
+        return ResponseEntity.ok(service.refresh(conta_id));
+
+    }
 
     @PostMapping ("/Delete")
     public  ResponseEntity<String> delete (

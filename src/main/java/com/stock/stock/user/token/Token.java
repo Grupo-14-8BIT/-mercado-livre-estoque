@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Token {
 
+  //testar
+
   @Id
   @GeneratedValue
   public Integer id;

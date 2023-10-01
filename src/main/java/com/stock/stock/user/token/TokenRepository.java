@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface TokenRepository extends JpaRepository<Token, Integer> {
 
+  //testar
   @Query(value = """
       select t from Token t inner join User u\s
       on t.usuario.id = u.id\s
