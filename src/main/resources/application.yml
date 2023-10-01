@@ -1,13 +1,13 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/Stock
+    url: jdbc:postgresql://localhost:5432/stock
     username: postgres
     password: 415263
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
@@ -18,7 +18,7 @@ spring:
 
 application:
   APP_ID: 2358645404637526
-  YOUR_URL: http://localhost:8082/stock
+  YOUR_URL: https://template.tr1.com.br/redirect
   CLIENT_SECRET: zfLVWLtLJkJuefdI1TlM3xVSG5LYFg8E
   security:
     jwt:

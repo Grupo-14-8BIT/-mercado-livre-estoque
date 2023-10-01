@@ -24,7 +24,9 @@ public class Redirect {
 
         ) {
 
-    service.cadastra(code,state);
+        service.cadastra(code,state);
+
+
 
 }
 

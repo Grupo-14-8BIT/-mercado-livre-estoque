@@ -1,24 +1,22 @@
 package com.stock.stock.Service;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.stock.stock.entity.Conta;
 import com.stock.stock.repository.ContaRepository;
 import com.stock.stock.responses.AuthToken;
+import com.stock.stock.user.User;
+import com.stock.stock.user.UserRepository;
 import jakarta.transaction.Transactional;
 import okhttp3.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ContaService {
@@ -32,51 +30,41 @@ public class ContaService {
     @Value("${application.CLIENT_SECRET}")
     private String CLIENT_SECRET;
 
+
+
     @Autowired
     private ContaRepository repository;
 
-    public class FullResponseBuilder {
-        public static String getFullResponse(HttpURLConnection con) throws IOException {
-            StringBuilder fullResponseBuilder = new StringBuilder();
 
-            fullResponseBuilder.append(con.getResponseCode())
-                    .append(" ")
-                    .append(con.getResponseMessage())
-                    .append("\n");
+    @Autowired
+    private UserRepository userRepository;
 
+    public List<Conta> getAll(Integer id) {
 
-            // read headers
+        List<Conta> contas = repository.findContasByUsuario(userRepository.findById(id).get());
 
+        if ( contas !=  null && !contas.isEmpty()){
+            try {
+                return  repository.findContasByUsuario(userRepository.findById(id).get());
 
-            con.getHeaderFields().entrySet().stream()
-                    .filter(entry -> entry.getKey() != null)
-                    .forEach(entry -> {
-                        fullResponseBuilder.append(entry.getKey()).append(": ");
-                        List headerValues = entry.getValue();
-                        Iterator it = headerValues.iterator();
-                        if (it.hasNext()) {
-                            fullResponseBuilder.append(it.next());
-                            while (it.hasNext()) {
-                                fullResponseBuilder.append(", ").append(it.next());
-                            }
-                        }
-                        fullResponseBuilder.append("\n");
-                    });
-
-            // read response content
-
-            return fullResponseBuilder.toString();
+            } catch (Exception e) {
+                throw new RuntimeException( "Nao foi possivel encontrar contas nesse usuarui" +e.getMessage() + e.getCause());
+            }
+        } else {
+            throw new RuntimeException("O usuario nao tem nenhuma conta associada");
         }
+
     }
 
+    
 
     @Transactional
-    public void cadastra ( String code, Integer state) throws IOException {
+    public Conta cadastra ( String code, Integer state) throws IOException {
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-        RequestBody body = RequestBody.create(mediaType, "grant_type=authorization_code&client_id=6393312633221000&client_secret=4FMu9IcRQvRMXgVDHSZ9iIAfZkHyyX7N&code=TG-65170321c7a1fd0001f0452f-195710882&redirect_uri=https://template.tr1.com.br/redirect");
+        RequestBody body = RequestBody.create(mediaType, "grant_type=authorization_code&client_id="+APP_ID+"&client_secret="+CLIENT_SECRET+"&code="+code+"&redirect_uri="+YOUR_URL);
         Request request = new Request.Builder()
                 .url("https://api.mercadolibre.com/oauth/token")
                 .method("POST", body)
@@ -85,79 +73,51 @@ public class ContaService {
                 .build();
         Response response = client.newCall(request).execute();
 
+        ObjectMapper mapper = new ObjectMapper();
+        AuthToken authToken = mapper.readValue(response.body().string(), AuthToken.class);
+
         System.out.println(response);
-        System.out.println(response.body().string().toString());
-        System.out.println(response.message());
+        System.out.println(authToken.getAccess_token());
+        System.out.println(authToken.getRefresh_token());
+        System.out.println(authToken.getToken_type());
+        System.out.println(authToken.getExpires_in());
+        System.out.println(authToken.getToken_type());
+        System.out.println(authToken.getScope());
 
+        Conta conta = new Conta();
+        BeanUtils.copyProperties(authToken, conta);
 
-//
-//        URL url = new URL("https://api.mercadolibre.com/oauth/token");
-//
-//        // Criar um objeto `HttpURLConnection` com a URL da request
-//        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//
-//
-//        // Set the doOutput property to true
-//        connection.setDoOutput(true);
-//
-//
-//        // Configurar o método HTTP e os headers da request
-//        connection.setRequestMethod("POST");
-//        connection.setRequestProperty("Accept", "application/json");
-//        connection.setRequestProperty("content-type", "application/x-www-form-urlencoded");
-//        //Criando o body da request
-//        Map<String,String> body = new HashMap<>();
-//        body.put("grant_type", "authorization_code");
-//        body.put("client_id", APP_ID);
-//        body.put("client_secret", CLIENT_SECRET);
-//        body.put("code", code);
-//        body.put("redirect_uri",YOUR_URL);
-//
-//
-//        //cofigurando o body da request
-//        DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-//        outputStream.writeBytes(body.toString());
-//        outputStream.flush();
-//
-//        //enviar a request
-//        System.out.printf(String.valueOf(connection));
-//        connection.setInstanceFollowRedirects(true);
-//
-//            connection.connect();
-//            System.out.println(connection.getResponseMessage());
-//
-//
-//        System.out.println(FullResponseBuilder.getFullResponse(connection));
-//
-//
-//
+        Optional<User> user = userRepository.findById(state);
 
+        System.out.println(user.get().getId());
 
-//        // Ler a resposta da request
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//        String line;
-//        String response = "";
-//        while ((line = reader.readLine()) != null) {
-//            response += line;
-//        }
-//
-//      // Transformar a resposta em um objeto JSON
-//        AuthToken auth = new Gson().fromJson(response, AuthToken.class);
-//
-//        // Imprimir o objeto Java
-//        System.out.println(auth);
+        if (user.isEmpty() || user == null) {
+            throw new RuntimeException("Usuario inexistente");
+        }
 
 
 
+            conta.setUsuario_id(user.get());
 
+            repository.save(conta);
 
+            return conta;
 
 
 
     }
 
 
+    public ResponseEntity<String> delete(User user, Integer conta_id) {
 
+      Optional<Conta> conta =   repository.findById( conta_id);
 
+      if ( repository.findContasByUsuario(user).contains(conta)) {
+          repository.delete(conta.get());
+          return ResponseEntity.ok("Conta desvinculada com sucesso");
+      } else {
+          throw new RuntimeException("Conta nao encontrada");
+      }
 
+    }
 }

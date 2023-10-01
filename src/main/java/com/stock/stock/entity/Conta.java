@@ -14,6 +14,7 @@ public class Conta {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE )
     private Integer id;
     private String nome;
     private String code;
@@ -21,7 +22,7 @@ public class Conta {
     private String refresh_token;
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private User usuario_id;
+    private User usuario;
     public void setId(Integer id) {
         this.id = id;
     }
@@ -63,10 +64,10 @@ public class Conta {
     }
 
     public User getUsuario_id() {
-        return usuario_id;
+        return usuario;
     }
 
     public void setUsuario_id(User usuario_id) {
-        this.usuario_id = usuario_id;
+        this.usuario = usuario_id;
     }
 }
