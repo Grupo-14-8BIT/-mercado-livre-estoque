@@ -128,7 +128,8 @@ public class ContaService {
 
     }
 
-    
+
+
 
     @Transactional
     public Conta cadastra ( String code, Integer state) throws IOException {
@@ -195,11 +196,14 @@ public class ContaService {
 
     public ResponseEntity<String> delete(User user, Integer conta_id) {
 
-      Optional<Conta> conta =   repository.findById( conta_id);
+      Optional<Conta> conta =  repository.findById( conta_id);
 
       if ( repository.findContasByUsuario(user).contains(conta)) {
+
           repository.delete(conta.get());
+
           return ResponseEntity.ok("Conta desvinculada com sucesso");
+
       } else {
           throw new RuntimeException("Conta nao encontrada");
       }
