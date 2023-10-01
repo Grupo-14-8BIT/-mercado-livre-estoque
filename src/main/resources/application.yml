@@ -7,7 +7,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
@@ -18,7 +18,7 @@ spring:
 
 application:
   APP_ID: 2358645404637526
-  YOUR_URL: http://localhost:8082/stock
+  YOUR_URL: https://template.tr1.com.br/redirect
   CLIENT_SECRET: zfLVWLtLJkJuefdI1TlM3xVSG5LYFg8E
   security:
     jwt:
