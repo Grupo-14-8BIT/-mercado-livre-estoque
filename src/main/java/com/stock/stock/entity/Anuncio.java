@@ -18,13 +18,13 @@ public class Anuncio {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String mlb_id;
+    private String mlb;
 
 
 
-//    @ManyToOne
-//    @JoinColumn(name = "sku_simples_id")
-//    private SkuSimples skuSimples;
+    @ManyToOne
+    @JoinColumn(name = "sku_simples_id")
+    private SkuSimples skuSimples;
 
 
     public void setId(Long id) {
