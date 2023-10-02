@@ -27,4 +27,4 @@ application:
       refresh-token:
         expiration: 604800000 # 7 days
 server:
-  port: 8082
+  port: 8081
