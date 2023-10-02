@@ -48,11 +48,11 @@ public class     Notify {
 
             Optional<Conta> conta = contaRepository.findContaByContaid(contaid);
 
-            Optional<Order> optionalOrder = orderRepository.findByMlbId(Long.valueOf(mlbId));
+            Optional<Order> optionalOrder = orderRepository.findByMlbid(Long.valueOf(mlbId));
                 //se a order ja existir
             if ( optionalOrder.isPresent()){
 
-                return ResponseEntity.ok().body(service.newOrder(optionalOrder.get().getMlbId(), conta.get()));
+                return ok().body(service.newOrder(optionalOrder.get().getMlbid(), conta.get()));
 
             }
                 // se a order nao existir

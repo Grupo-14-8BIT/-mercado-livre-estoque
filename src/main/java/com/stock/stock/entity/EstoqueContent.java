@@ -1,5 +1,6 @@
 package com.stock.stock.entity;
 
+import com.stock.stock.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,9 @@ public class EstoqueContent {
     @ManyToOne
     @JoinColumn(name = "estoque")
     private Estoque estoque;
+    @ManyToOne
+    @JoinColumn(name = "user")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "sku")
