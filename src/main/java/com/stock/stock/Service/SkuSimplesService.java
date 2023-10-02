@@ -260,6 +260,7 @@ public class SkuSimplesService {
             skuOptional.get().setNome(skuSimplesDTO.getNome());
             skuOptional.get().setDescricao(skuSimplesDTO.getDescricao());
             skuOptional.get().setFoto(skuSimplesDTO.getFoto());
+            repository.save(skuOptional.get());
         } else {
             return ResponseEntity.badRequest().body("sku nao existe");
         }
