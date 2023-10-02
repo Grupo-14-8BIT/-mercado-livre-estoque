@@ -3,7 +3,9 @@ package com.stock.stock.entity;
 import com.stock.stock.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "conta")
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Getter @Setter
 
 public class Conta {
 
@@ -32,38 +34,15 @@ public class Conta {
     private LocalDateTime expires;
 
 
-    public LocalDateTime getExpires() {
-        return expires;
-    }
-
-    public void setExpires(LocalDateTime expires) {
-        this.expires = expires;
-    }
-
-    public Long getConta_id() {
-        return contaid;
-    }
-
-    public void setConta_id(Long conta_id) {
-        this.contaid = conta_id;
-    }
-
-    public String getExpires_in() {
-        return refresh_token;
-    }
-
-
-    public User getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(User usuario) {
-        this.usuario = usuario;
-    }
-
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private User usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "estoque_id")
+    private Estoque estoque;
+
+
     public void setId(Integer id) {
         this.id = id;
     }

@@ -45,7 +45,7 @@ public class ContaService {
 
 
 // checa se esta dando o tempo de refrescar o acess token
-    @Scheduled(fixedDelay = 60000 )
+    @Scheduled(fixedDelay = 6000000 )
     public void refresh_temporizer() {
 
      List<Conta> contas =  repository.findAll();
