@@ -11,6 +11,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.stock.stock.entity.Anuncio;
 import com.stock.stock.entity.Conta;
 import com.stock.stock.entity.SkuSimples;
+import com.stock.stock.entity.SkuSimplesDTO;
 import com.stock.stock.repository.AnuncioRepository;
 import com.stock.stock.repository.ContaRepository;
 import com.stock.stock.repository.SkuSimplesRepository;
@@ -45,8 +46,6 @@ public class SkuSimplesService {
     private UserRepository userRepository;
     @Autowired
     private ContaRepository contaRepository;
-
-
     @Autowired
     private AnuncioRepository anuncioRepository;
 
@@ -187,6 +186,7 @@ public class SkuSimplesService {
                                           Anuncio novo_anuncio = new Anuncio();
                                           novo_anuncio.setSkuSimples(skuSimplesOptional.get());
                                           novo_anuncio.setMlb(mlb);
+                                          novo_anuncio.setConta(conta);
                                           anuncioRepository.save(novo_anuncio);
 
                                       } else {
@@ -205,6 +205,7 @@ public class SkuSimplesService {
                                               if ( !anuncio.isPresent() && !skuSimplesOptional.isPresent()){
                                                       Anuncio novo_anuncio = new Anuncio();
                                                       novo_anuncio.setMlb(mlb);
+                                                      novo_anuncio.setConta(conta);
                                                       SkuSimples novoSku = new SkuSimples();
                                                      novoSku.setSKU(sku);
                                                      novoSku.setUser(conta.getUsuario());
@@ -246,6 +247,56 @@ public class SkuSimplesService {
 
 
     }
+
+    public ResponseEntity<String> update (SkuSimplesDTO skuSimplesDTO, String sku) {
+
+        Optional<SkuSimples> skuOptional = repository.findBySKU(sku);
+        if( skuOptional.isPresent()) {
+            List<Anuncio> anuncioList = anuncioRepository.findAllBySkuSimples(skuOptional.get());
+            anuncioList.forEach(anuncio -> {
+                mudarSkuAnuncio(anuncio,skuSimplesDTO.getSKU(),anuncio.getConta());
+            });
+            skuOptional.get().setSKU(skuSimplesDTO.getSKU());
+            skuOptional.get().setNome(skuSimplesDTO.getNome());
+            skuOptional.get().setDescricao(skuSimplesDTO.getDescricao());
+            skuOptional.get().setFoto(skuSimplesDTO.getFoto());
+            repository.save(skuOptional.get());
+        } else {
+            return ResponseEntity.badRequest().body("sku nao existe");
+        }
+
+
+
+        return null;
+    };
+
+    public ResponseEntity<String> mudarSkuAnuncio (Anuncio anuncio, String sku, Conta conta) {
+
+        Optional<SkuSimples> optionalSkuSimples = repository.findBySKU(sku);
+
+        if ( !optionalSkuSimples.isPresent()) {
+            SkuSimples novoSku = new SkuSimples();
+            novoSku.setSKU(sku);
+            novoSku.setUser(conta.getUsuario());
+            repository.save(novoSku);
+        }
+
+        Unirest.setTimeouts(0, 0);
+        try {
+            HttpResponse<String> response = Unirest.put("https://api.mercadolibre.com/items/"+anuncio.getMlb())
+                    .header("Authorization", "Bearer "+ conta.getAcess_token())
+                    .header("Content-Type", "application/json")
+                    .body("{\n   \"attributes\": [\n       {\n           \"id\": \"SELLER_SKU\",\n           \"value_name\": \""+optionalSkuSimples.get().getSKU()+"\"\n       }\n   ]\n}")
+                    .asString();
+
+        } catch (UnirestException e) {
+            throw new RuntimeException(e);
+        }
+
+        fetch(conta.getUsuario());
+        System.out.println("SKU do anuncio  "+ anuncio.getMlb()+ "  atualizado com sucesso");
+        return ResponseEntity.ok("SKU do anuncio  "+ anuncio.getMlb()+ "  atualizado com sucesso");
+    };
 
 
 

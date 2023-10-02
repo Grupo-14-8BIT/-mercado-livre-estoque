@@ -30,7 +30,7 @@ public class Redirect {
 
 }
 
-    @GetMapping("teste")
+    @GetMapping("/teste")
     public void teste (
 
 
