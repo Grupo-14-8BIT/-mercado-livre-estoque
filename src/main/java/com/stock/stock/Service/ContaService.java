@@ -131,8 +131,6 @@ public class ContaService {
     }
 
 
-
-
     @Transactional
     public Conta cadastra ( String code, Integer state) throws IOException {
 
