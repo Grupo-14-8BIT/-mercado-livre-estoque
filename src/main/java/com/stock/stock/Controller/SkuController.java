@@ -3,7 +3,7 @@ package com.stock.stock.Controller;
 import com.stock.stock.Service.SkuSimplesService;
 import com.stock.stock.entity.Anuncio;
 import com.stock.stock.entity.SkuSimples;
-import com.stock.stock.entity.SkuSimplesDTO;
+import com.stock.stock.dto.SkuSimplesDTO;
 import com.stock.stock.repository.AnuncioRepository;
 import com.stock.stock.repository.SkuSimplesRepository;
 import com.stock.stock.user.User;

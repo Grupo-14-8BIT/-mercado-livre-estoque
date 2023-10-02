@@ -9,7 +9,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.stock.stock.entity.*;
-import com.stock.stock.entity.SkuSimplesDTO;
+import com.stock.stock.dto.SkuSimplesDTO;
 import com.stock.stock.repository.AnuncioRepository;
 import com.stock.stock.repository.ContaRepository;
 import com.stock.stock.repository.OrderRepository;

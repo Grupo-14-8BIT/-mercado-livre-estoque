@@ -1,4 +1,4 @@
-package com.stock.stock.entity;
+package com.stock.stock.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-
 public class SkuSimplesDTO {
 
     private String nome;

@@ -39,7 +39,7 @@ public class ContaRepositoryTest {
         // Create a Conta
         Conta conta = new Conta();
         conta.setId(1);
-        conta.setConta_id(12345L);
+        conta.setContaid(12345L);
         conta.setAcess_token("access_token");
         conta.setRefresh_token("refresh_token");
         conta.setExpires(LocalDateTime.now().plusMinutes(300));
