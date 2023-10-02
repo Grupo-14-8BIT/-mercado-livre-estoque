@@ -62,7 +62,7 @@ public class SkuSimplesService {
                   Unirest.setTimeouts(0, 0);
                   HttpResponse<String> json = null;
                   try {
-                      json = Unirest.get("https://api.mercadolibre.com/users/" + conta.getConta_id() + "/items/search?limit=100")
+                      json = Unirest.get("https://api.mercadolibre.com/users/" + conta.getContaid() + "/items/search?limit=100")
                               .header("Authorization", "Bearer " + conta.getAcess_token())
                               .asString();
                   } catch (UnirestException e) {
@@ -118,7 +118,7 @@ public class SkuSimplesService {
                       Unirest.setTimeouts(0, 0);
                       HttpResponse<String> json2 = null;
                       try {
-                          json2 = Unirest.get("https://api.mercadolibre.com/users/" + conta.getConta_id() + "/items/search?limit=100&offset=" + i)
+                          json2 = Unirest.get("https://api.mercadolibre.com/users/" + conta.getContaid() + "/items/search?limit=100&offset=" + i)
                                   .header("Authorization", "Bearer " + conta.getAcess_token())
                                   .asString();
                       } catch (UnirestException e) {

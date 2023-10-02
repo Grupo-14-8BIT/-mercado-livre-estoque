@@ -3,29 +3,22 @@ package com.stock.stock.Service;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.stock.stock.entity.*;
-import com.stock.stock.entity.SkuSimplesDTO;
+import com.stock.stock.entity.Conta;
+import com.stock.stock.entity.Order;
+import com.stock.stock.entity.SkuSimples;
 import com.stock.stock.repository.AnuncioRepository;
 import com.stock.stock.repository.ContaRepository;
 import com.stock.stock.repository.OrderRepository;
 import com.stock.stock.repository.SkuSimplesRepository;
-import com.stock.stock.responses.ListItems;
-import com.stock.stock.user.User;
 import com.stock.stock.user.UserRepository;
-import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -81,7 +74,7 @@ public class OrderService {
                 }
                  Conta conta_order = conta;
                 new_order.setConta( conta_order);
-                new_order.setMlbId(mlbId);
+                new_order.setMlbid(mlbId);
                  Integer quantidade = node.path("order_items").path(0).path("quantity").asInt();
                     new_order.setQuantidade(quantidade);
                  String comprador = node.path("buyer").path("nickname").asText();

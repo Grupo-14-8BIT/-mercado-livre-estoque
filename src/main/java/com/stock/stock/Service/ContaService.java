@@ -161,7 +161,7 @@ public class ContaService {
         conta.setCode(code);
         conta.setAcess_token(authToken.getAccess_token());
         conta.setRefresh_token(authToken.getRefresh_token());
-        conta.setConta_id(Long.valueOf(authToken.getUser_id()));
+        conta.setContaid(Long.valueOf(authToken.getUser_id()));
         conta.setExpires(LocalDateTime.now().plusMinutes(300));
 
 

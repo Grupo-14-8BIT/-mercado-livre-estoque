@@ -18,9 +18,14 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.SEQUENCE )
     private Integer id;
 
-    private Long MlbId;
+    private Long mlbid;
 
+    @ManyToOne
+    @JoinColumn(name = "sku")
     private SkuSimples sku;
+
+    @ManyToOne
+    @JoinColumn(name = "conta")
 
     private Conta conta;
 
