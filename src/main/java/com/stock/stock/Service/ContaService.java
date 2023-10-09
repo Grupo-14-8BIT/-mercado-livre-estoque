@@ -44,9 +44,11 @@ public class ContaService {
     @Autowired
     private UserRepository userRepository;
 
+    public ContaService(ContaRepository contaRepository, OkHttpClient okHttpClient) {
+    }
 
 
-// checa se esta dando o tempo de refrescar o acess token
+    // checa se esta dando o tempo de refrescar o acess token
     @Scheduled(fixedDelay = 6000000 )
     public void refresh_temporizer() {
 

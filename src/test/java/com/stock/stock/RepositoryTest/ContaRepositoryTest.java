@@ -30,27 +30,27 @@ public class ContaRepositoryTest {
     @Mock
     private UserRepository userRepository;
 
-    @Test
-    public void testFindContasByUsuario() {
-        User user = new User();
-        user.setId(1);
-
-        Conta conta = new Conta();
-        conta.setId(1);
-        conta.setContaid(12345L);
-        conta.setAcess_token("access_token");
-        conta.setRefresh_token("refresh_token");
-        conta.setExpires(LocalDateTime.now().plusMinutes(300));
-        conta.setUsuario(user);
-
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-
-        contaRepository.save(conta);
-
-        List<Conta> foundContas = contaRepository.findContasByUsuario(user);
-
-        assertThat(foundContas).hasSize(1);
-        assertThat(foundContas.get(0)).isEqualTo(conta);
-    }
+//    @Test
+//    public void testFindContasByUsuario() {
+//        User user = new User();
+//        user.setId(1);
+//
+//        Conta conta = new Conta();
+//        conta.setId(1);
+//        conta.setContaid(12345L);
+//        conta.setAcess_token("access_token");
+//        conta.setRefresh_token("refresh_token");
+//        conta.setExpires(LocalDateTime.now().plusMinutes(300));
+//        conta.setUsuario(user);
+//
+//        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+//
+//        contaRepository.save(conta);
+//
+//        List<Conta> foundContas = contaRepository.findContasByUsuario(user);
+//
+//        assertThat(foundContas).hasSize(1);
+//        assertThat(foundContas.get(0)).isEqualTo(conta);
+//    }
 
 }

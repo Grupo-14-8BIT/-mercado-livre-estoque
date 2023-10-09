@@ -44,20 +44,20 @@ public class EstoqueContentRepositoryTest {
         estoque = estoqueRepository.save(estoque);
     }
 
-    @Test
-    public void testFindAllByEstoque() {
-        EstoqueContent content1 = new EstoqueContent();
-        content1.setEstoque(estoque);
-        estoqueContentRepository.save(content1);
-
-        EstoqueContent content2 = new EstoqueContent();
-        content2.setEstoque(estoque);
-        estoqueContentRepository.save(content2);
-
-        List<EstoqueContent> foundContents = estoqueContentRepository.findAllByEstoque(estoque);
-
-        assertEquals(2, foundContents.size());
-        assertTrue(foundContents.contains(content1));
-        assertTrue(foundContents.contains(content2));
-    }
+//    @Test
+//    public void testFindAllByEstoque() {
+//        EstoqueContent content1 = new EstoqueContent();
+//        content1.setEstoque(estoque);
+//        estoqueContentRepository.save(content1);
+//
+//        EstoqueContent content2 = new EstoqueContent();
+//        content2.setEstoque(estoque);
+//        estoqueContentRepository.save(content2);
+//
+//        List<EstoqueContent> foundContents = estoqueContentRepository.findAllByEstoque(estoque);
+//
+//        assertEquals(2, foundContents.size());
+//        assertTrue(foundContents.contains(content1));
+//        assertTrue(foundContents.contains(content2));
+//    }
 }

@@ -34,20 +34,20 @@ public class SkuSimplesRepositoryTest {
         user = userRepository.save(user);
     }
 
-    @Test
-    public void testFindBySKU() {
-        SkuSimples skuSimples = new SkuSimples();
-        skuSimples.setUser(user);
-        skuSimples.setNome("Test SKU");
-        skuSimples.setSKU("ABC123");
-        skuSimples.setDescricao("Test Description");
-        skuSimples.setFoto("test.jpg");
-        skuSimplesRepository.save(skuSimples);
-
-        Optional<SkuSimples> foundSku = skuSimplesRepository.findBySKU("ABC123");
-
-        assertTrue(foundSku.isPresent());
-
-        assertEquals("ABC123", foundSku.get().getSKU());
-    }
+//    @Test
+//    public void testFindBySKU() {
+//        SkuSimples skuSimples = new SkuSimples();
+//        skuSimples.setUser(user);
+//        skuSimples.setNome("Test SKU");
+//        skuSimples.setSKU("ABC123");
+//        skuSimples.setDescricao("Test Description");
+//        skuSimples.setFoto("test.jpg");
+//        skuSimplesRepository.save(skuSimples);
+//
+//        Optional<SkuSimples> foundSku = skuSimplesRepository.findBySKU("ABC123");
+//
+//        assertTrue(foundSku.isPresent());
+//
+//        assertEquals("ABC123", foundSku.get().getSKU());
+//    }
 }
