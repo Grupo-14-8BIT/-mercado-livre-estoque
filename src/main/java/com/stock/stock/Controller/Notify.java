@@ -1,5 +1,6 @@
 package com.stock.stock.Controller;
 
+import com.stock.stock.Service.EstoqueService;
 import com.stock.stock.Service.OrderService;
 import com.stock.stock.entity.Conta;
 import com.stock.stock.entity.Order;
@@ -30,9 +31,12 @@ public class     Notify {
     @Autowired
     public OrderService service;
 
+    @Autowired
+    public EstoqueService estoqueService;
+
 
     @PostMapping()
-    public ResponseEntity<Order>  NOTIFY(
+    public ResponseEntity  NOTIFY(
             @RequestBody OrderNotify orderNotify
             ) {
         System.out.println("TESTE NOTIFY TESTE");
@@ -48,24 +52,22 @@ public class     Notify {
 
             Optional<Conta> conta = contaRepository.findContaByContaid(contaid);
 
-            Optional<Order> optionalOrder = orderRepository.findByMlbId(Long.valueOf(mlbId));
+            Optional<Order> optionalOrder = orderRepository.findByMlbid(Long.valueOf(mlbId));
                 //se a order ja existir
             if ( optionalOrder.isPresent()){
 
-                return ResponseEntity.ok().body(service.newOrder(optionalOrder.get().getMlbId(), conta.get()));
+                return ok().body(service.newOrder(optionalOrder.get().getMlbid(), conta.get()));
 
             }
-                // se a order nao existir
             else  {
-
-
+                orderRepository.save(optionalOrder.get());
+                estoqueService.AtualizaEstoque(optionalOrder.get());
+                return ok().build();
             }
 
 
 
         }
-
-
 
         return ok().build();
 

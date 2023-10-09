@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "order")
+@Table(name = "MLOrder")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
@@ -18,16 +18,20 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.SEQUENCE )
     private Integer id;
 
-    private Long MlbId;
+    private Long mlbid;
 
+    @ManyToOne
+    @JoinColumn(name = "sku_simples")
     private SkuSimples sku;
+
+    @ManyToOne
+    @JoinColumn(name = "conta")
 
     private Conta conta;
 
     private Integer quantidade;
 
     private String comprador;
-
 
     private String status;
 
