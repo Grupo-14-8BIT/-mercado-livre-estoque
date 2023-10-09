@@ -169,7 +169,7 @@ public class SkuSimplesService {
                                   //se mlb ja cadastrado, e sku sao os mesmos -> exit
                                   Optional<Anuncio> anuncio = anuncioRepository.findAnuncioByMlb(mlb);
                                   Optional<SkuSimples> skuSimplesOptional = repository.findBySKU(sku);
-                                  if (anuncio.isPresent() || skuSimplesOptional.isPresent()){
+                                  if (anuncio.isPresent() && skuSimplesOptional.isPresent()){
                                       //se o SKU for o mesmo
                                       if (anuncio.get().getSkuSimples().getSKU() == sku) {
                                           anuncioRepository.save(anuncio.get());

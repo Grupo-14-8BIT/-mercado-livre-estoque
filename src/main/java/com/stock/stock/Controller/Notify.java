@@ -54,14 +54,19 @@ public class     Notify {
 
             Optional<Order> optionalOrder = orderRepository.findByMlbid(Long.valueOf(mlbId));
                 //se a order ja existir
-            if ( optionalOrder.isPresent()){
+            if ( !optionalOrder.isPresent()){
 
-                return ok().body(service.newOrder(optionalOrder.get().getMlbid(), conta.get()));
+                service.newOrder(Long.valueOf(mlbId), conta.get());
+
+                Optional<Order> optionalOrdersaved = orderRepository.findByMlbid(Long.valueOf(mlbId));
+
+
+                estoqueService.AtualizaEstoque(optionalOrdersaved.get());
 
             }
             else  {
-                orderRepository.save(optionalOrder.get());
-                estoqueService.AtualizaEstoque(optionalOrder.get());
+//                orderRepository.save(optionalOrder.get());
+//                estoqueService.AtualizaEstoque(optionalOrder.get());
                 return ok().build();
             }
 

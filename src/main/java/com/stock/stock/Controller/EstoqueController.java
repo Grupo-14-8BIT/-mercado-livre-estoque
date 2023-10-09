@@ -99,7 +99,7 @@ public class EstoqueController {
 
     @PutMapping ("/update")
     public ResponseEntity<Estoque> update(
-            HttpServletRequest request, @RequestBody @Valid EstoqueDTO estoqueDTO,
+            HttpServletRequest request, @RequestBody  EstoqueDTO estoqueDTO,
             @RequestParam Integer id
 
     ){
@@ -127,7 +127,7 @@ public class EstoqueController {
 
     @PostMapping("/addContent")
     public ResponseEntity<EstoqueContent> addContent(
-            HttpServletRequest request, @RequestBody @Valid EstoqueContentDTO estoqueContentDTO
+            HttpServletRequest request, @RequestBody EstoqueContentDTO estoqueContentDTO
 
     ){
         final String userEmail;

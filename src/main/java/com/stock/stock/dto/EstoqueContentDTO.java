@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class EstoqueContentDTO {
-    private Integer quantidade_real;
-    private Integer qantidade_deduzida;
 
+    private String skuSimples;
+    private Integer estoque;
+    private Integer quantidade_real;
 }
