@@ -26,7 +26,7 @@ public class Anuncio {
 
 
     @ManyToOne
-    @JoinColumn(name = "sku_simples_id")
+    @JoinColumn(name = "sku_simples")
     private SkuSimples skuSimples;
 
 
