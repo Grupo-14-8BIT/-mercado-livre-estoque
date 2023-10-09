@@ -1,4 +1,4 @@
-package com.stock.stock.ControllerTest;
+package ControllerTest;
 import com.stock.stock.Controller.SkuController;
 import com.stock.stock.Service.SkuSimplesService;
 import com.stock.stock.dto.SkuSimplesDTO;
@@ -68,6 +68,7 @@ public class SkuControllerTest {
 
     @Test
     public void testMudarSkuAnuncio() {
+        // Mocking user and service behavior
         User user = new User();
         user.setEmail("user@example.com");
 
@@ -83,14 +84,17 @@ public class SkuControllerTest {
 
         when(skuSimplesService.mudarSkuAnuncio(any(), any(), any())).thenReturn(ResponseEntity.ok("Success"));
 
+        // Test the controller method
         ResponseEntity<String> response = skuController.mudarSkuAnuncio(request, "mlb123", "new-sku");
         assertEquals(ResponseEntity.ok("Success"), response);
 
+        // Verify that the service method was called with the expected parameters
         verify(skuSimplesService).mudarSkuAnuncio(any(), eq("new-sku"), any());
     }
 
     @Test
     public void testUpdate() {
+        // Mocking user and service behavior
         User user = new User();
         user.setEmail("user@example.com");
 
@@ -112,9 +116,11 @@ public class SkuControllerTest {
         when(skuSimplesRepository.findBySKU("existing-sku")).thenReturn(Optional.of(skuSimples));
         when(skuSimplesService.update(eq(skuSimplesDTO), eq("existing-sku"))).thenReturn(ResponseEntity.ok("Success"));
 
+        // Test the controller method
         ResponseEntity<String> response = skuController.update(request, "existing-sku", skuSimplesDTO);
         assertEquals(ResponseEntity.ok("Success"), response);
 
+        // Verify that the service method was called with the expected parameters
         verify(skuSimplesService).update(eq(skuSimplesDTO), eq("existing-sku"));
     }
 
