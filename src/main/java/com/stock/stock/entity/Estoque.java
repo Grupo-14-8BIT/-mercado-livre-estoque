@@ -1,5 +1,6 @@
 package com.stock.stock.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stock.stock.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class Estoque  implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario")
+    @JsonIgnore
     private User user;
 
     @OneToOne

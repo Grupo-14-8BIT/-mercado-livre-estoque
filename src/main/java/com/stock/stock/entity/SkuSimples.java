@@ -1,5 +1,6 @@
 package com.stock.stock.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stock.stock.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class SkuSimples {
 
     @ManyToOne
     @JoinColumn(name = "usuario")
+    @JsonIgnore
     private User user;
 
     private String nome;

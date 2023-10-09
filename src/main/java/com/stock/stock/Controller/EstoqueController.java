@@ -100,7 +100,7 @@ public class EstoqueController {
 
     @PutMapping ("/update")
     public ResponseEntity<Estoque> update(
-            HttpServletRequest request, @RequestBody  EstoqueDTO estoqueDTO,
+            HttpServletRequest request, @RequestBody @Valid EstoqueDTO estoqueDTO,
             @RequestParam Integer id
 
     ){
@@ -128,7 +128,7 @@ public class EstoqueController {
 
     @PostMapping("/addContent")
     public ResponseEntity<EstoqueContent> addContent(
-            HttpServletRequest request, @RequestBody EstoqueContentDTO estoqueContentDTO
+            HttpServletRequest request, @RequestBody @Valid EstoqueContentDTO estoqueContentDTO
 
     ){
         final String userEmail;
@@ -207,6 +207,18 @@ public class EstoqueController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace().toString());
     }
 
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleException(RuntimeException e) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMessage(e.getMessage());
+
+        return errorResponse;
+
+
+
+    }
 
 
 

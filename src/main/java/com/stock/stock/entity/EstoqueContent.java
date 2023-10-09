@@ -1,5 +1,6 @@
 package com.stock.stock.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stock.stock.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,8 @@ public class EstoqueContent {
 
     @ManyToOne
     @JoinColumn(name = "usuario")
+    @JsonIgnore
+
     private User user;
 
     @ManyToOne
@@ -34,6 +37,7 @@ public class EstoqueContent {
 
     private Integer qantidade_deduzida;
     @ManyToOne
+    @JsonIgnore
     private Estoque estoque;
 
 

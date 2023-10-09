@@ -129,6 +129,7 @@ try {
 
         if (estoqueContent.getUser() == user) {
             BeanUtils.copyProperties(estoqueContentDTO,estoqueContent);
+            estoqueContent.setQantidade_deduzida(estoqueContentDTO.getQuantidade_real());
             estoqueContentRepository.save(estoqueContent);
             return  estoqueContent;
         } else {
