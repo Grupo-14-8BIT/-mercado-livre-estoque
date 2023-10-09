@@ -2,8 +2,7 @@ package com.stock.stock.Service;
 
 import com.stock.stock.dto.EstoqueContentDTO;
 import com.stock.stock.dto.EstoqueDTO;
-import com.stock.stock.entity.Estoque;
-import com.stock.stock.entity.EstoqueContent;
+import com.stock.stock.entity.*;
 import com.stock.stock.repository.*;
 import com.stock.stock.user.User;
 import com.stock.stock.user.UserRepository;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EstoqueService {
@@ -41,78 +41,81 @@ public class EstoqueService {
     private EstoqueContentRepository estoqueContentRepository;
 
 
-    private Estoque create(EstoqueDTO estoqueDTO){
-        try{
+    public Estoque create(EstoqueDTO estoqueDTO, User user){
+
             Estoque novo_estoque = new Estoque();
             BeanUtils.copyProperties(estoqueDTO, novo_estoque);
+            novo_estoque.setUser(user);
             repository.save(novo_estoque);
             return novo_estoque;
-        } catch (Exception e) {
-            throw new RuntimeException("nao foi criado com sucesso");
-        }
+
 
     }
 
-    private Estoque findById(Integer id) {
+    public Estoque findById(Integer id, User user) {
 
-        try {
-            return repository.findById(id).get();
-        } catch (Exception e){
-            throw new RuntimeException("Nao foi possivel encontar o estoque, Motivo: " + e.getCause().toString());
-        }
+
+            Optional<Estoque> optionalEstoque = repository.findById(id);
+            if( optionalEstoque.get().getUser() == user) {
+                return optionalEstoque.get();
+            } else {
+                throw new RuntimeException("Voce nao tem acesso a esse estoque");
+            }
+
+
 
     }
 
-    private List<Estoque> GetAll( User user){
-    try {
+    public List<Estoque> getAll( User user){
+
         return repository.findAllByUser(user);
-    } catch (Exception e) {
-        throw  new RuntimeException("Nao foi pssivel retornar nenhum estoque");
-    }
 
     }
 
-    private Estoque update(Estoque estoque, EstoqueDTO estoqueDTO){
+    public Estoque update(Estoque estoque, EstoqueDTO estoqueDTO){
 
-        try {
+
             BeanUtils.copyProperties(estoqueDTO,estoque);
             repository.save(estoque);
             return estoque;
-        } catch (Exception e) {
-            throw new RuntimeException("Nao foi possivel atualizar o estoque");
-        }
+
     }
 
 
     /////////ESTOQUE CONTENT ///////
 
-    private EstoqueContent create (EstoqueContentDTO estoqueContentDTO) {
+    public EstoqueContent addContent(EstoqueContentDTO estoqueContentDTO, User user) {
 
         EstoqueContent estoqueContent = new EstoqueContent();
 
-        try {
+
             BeanUtils.copyProperties(estoqueContentDTO, estoqueContent);
+            estoqueContent.setUser(user);
             estoqueContentRepository.save(estoqueContent);
             return  estoqueContent;
-        } catch (Exception e) {
-            throw new RuntimeException("Nao foi possivel entrar em contato");
 
-        }
 
 
     }
 
-    private List<EstoqueContent> getAllByEstoque( Estoque estoque){
-        try {
-            List<EstoqueContent> estoqueContentList = estoqueContentRepository.findAllByEstoque(estoque);
-            return estoqueContentList;
-        } catch (Exception e) {
-            throw new RuntimeException("Nada a retornar");
+    public List<EstoqueContent> getAllByEstoque( User user, Integer id){
+
+        Optional<Estoque> optionalEstoque = repository.findById(id);
+        if (optionalEstoque.get().getUser() == user){
+
+                List<EstoqueContent> estoqueContentList = estoqueContentRepository.findAllByEstoque(optionalEstoque.get());
+                return estoqueContentList;
+
+
+        } else  {
+            throw new RuntimeException("Voce nao tem permissao para acessar esse estoque");
         }
+
+
 
     }
 
-    private EstoqueContent update( EstoqueContentDTO estoqueContentDTO, EstoqueContent estoqueContent, User user){
+    public EstoqueContent updateContent( EstoqueContentDTO estoqueContentDTO, EstoqueContent estoqueContent, User user){
 
         if (estoqueContent.getUser() == user) {
             BeanUtils.copyProperties(estoqueContentDTO,estoqueContent);
@@ -124,7 +127,7 @@ public class EstoqueService {
 
     }
 
-    private EstoqueContent delete( EstoqueContent estoqueContent, User user){
+    public EstoqueContent delete( EstoqueContent estoqueContent, User user){
 
         if (estoqueContent.getUser() == user) {
             estoqueContentRepository.delete(estoqueContent);
@@ -135,12 +138,23 @@ public class EstoqueService {
 
     }
 
-//    private EstoqueContent AtualizaEstoque(Order order){
-//
-//        Optional<EstoqueContent> estoqueContentOptional = estoqueContentRepository.findBy
-//
-//
-//    }
+    public void AtualizaEstoque(Order order){
+
+        User user = order.getConta().getUsuario();
+        SkuSimples skuSimples = order.getSku();
+        Estoque estoque =   repository.findByContasContains(order.getConta()).get();
+
+
+            Optional<EstoqueContent> estoqueContentOptional = estoqueContentRepository.findByUserAndSkuSimplesAndAndEstoque(user,skuSimples,estoque);
+            estoqueContentOptional.get().setQantidade_deduzida(estoqueContentOptional.get().getQantidade_deduzida() - order.getQuantidade());
+            estoqueContentRepository.save(estoqueContentOptional.get());
+            System.out.println("Estoque atualizado");
+
+
+
+
+
+    }
 
 
 

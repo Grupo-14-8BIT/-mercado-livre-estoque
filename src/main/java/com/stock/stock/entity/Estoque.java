@@ -24,13 +24,13 @@ public class Estoque {
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "usuario")
     private User user;
 
-    @OneToMany
+    @OneToMany(mappedBy = "estoque")
     private List<Conta> contas;
 
-    @OneToMany
+    @OneToMany(mappedBy = "estoque")
     private List<EstoqueContent> estoqueContents;
 
 

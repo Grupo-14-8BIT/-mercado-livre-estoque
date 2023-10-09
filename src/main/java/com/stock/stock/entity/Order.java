@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "order")
+@Table(name = "MLOrder")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
@@ -21,7 +21,7 @@ public class Order {
     private Long mlbid;
 
     @ManyToOne
-    @JoinColumn(name = "sku")
+    @JoinColumn(name = "sku_simples")
     private SkuSimples sku;
 
     @ManyToOne
@@ -32,7 +32,6 @@ public class Order {
     private Integer quantidade;
 
     private String comprador;
-
 
     private String status;
 

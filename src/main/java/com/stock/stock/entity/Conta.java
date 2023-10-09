@@ -35,12 +35,12 @@ public class Conta {
 
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "usuario")
     private User usuario;
-
     @ManyToOne
-    @JoinColumn(name = "estoque_id")
     private Estoque estoque;
+
+
 
 
     public void setId(Integer id) {
