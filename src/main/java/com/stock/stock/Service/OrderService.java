@@ -26,10 +26,8 @@ public class OrderService {
 
     @Value("${application.APP_ID}")
     private String APP_ID;
-
     @Value("${application.YOUR_URL}")
     private String YOUR_URL;
-
     @Value("${application.CLIENT_SECRET}")
     private String CLIENT_SECRET;
 
@@ -43,8 +41,6 @@ public class OrderService {
     private AnuncioRepository anuncioRepository;
     @Autowired
     private OrderRepository repository;
-
-
 
     public Order newOrder (Long mlbId, Conta conta) {
 
@@ -65,7 +61,6 @@ public class OrderService {
                 parser = mapper.getFactory().createParser(body2);
                 JsonNode node = parser.readValueAsTree();
 
-
                  Long MlbId = node.path("id").asLong();
                  Optional<SkuSimples> order_sku = skuSimplesRepository.findBySKU(node.path("order_items").path(0).path("item").path("seller_sku").asText());
                 if ( order_sku.isPresent()){
@@ -81,31 +76,16 @@ public class OrderService {
                  String status = node.path("status").asText();
                     new_order.setStatus(status);
 
-
                     repository.save(new_order);
 
                     return new_order;
-
-
-
-
-
-
-
-
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-
         } catch (UnirestException e) {
             throw new RuntimeException(e);
         }
-
-
-
     }
-
-
 }

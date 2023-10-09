@@ -8,7 +8,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-
 public class SkuSimplesDTO {
     @NotNull
     private String nome;
