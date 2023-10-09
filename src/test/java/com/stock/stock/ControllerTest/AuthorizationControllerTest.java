@@ -1,4 +1,4 @@
-package ControllerTest;
+package com.stock.stock.ControllerTest;
 
 import com.stock.stock.user.auth.AuthenticationController;
 import com.stock.stock.user.auth.AuthenticationRequest;

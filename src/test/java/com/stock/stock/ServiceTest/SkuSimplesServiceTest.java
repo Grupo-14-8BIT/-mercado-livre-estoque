@@ -1,4 +1,4 @@
-package ServiceTest;
+package com.stock.stock.ServiceTest;
 
 import com.mashape.unirest.http.Unirest;
 import com.stock.stock.Service.SkuSimplesService;

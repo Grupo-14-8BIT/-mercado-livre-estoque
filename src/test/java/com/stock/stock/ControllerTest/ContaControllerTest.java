@@ -1,4 +1,4 @@
-package ControllerTest;
+package com.stock.stock.ControllerTest;
 
 
 import com.stock.stock.Controller.ContaController;
