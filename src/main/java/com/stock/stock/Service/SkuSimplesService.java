@@ -11,7 +11,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.stock.stock.entity.Anuncio;
 import com.stock.stock.entity.Conta;
 import com.stock.stock.entity.SkuSimples;
-import com.stock.stock.entity.SkuSimplesDTO;
+import com.stock.stock.dto.SkuSimplesDTO;
 import com.stock.stock.repository.AnuncioRepository;
 import com.stock.stock.repository.ContaRepository;
 import com.stock.stock.repository.SkuSimplesRepository;
