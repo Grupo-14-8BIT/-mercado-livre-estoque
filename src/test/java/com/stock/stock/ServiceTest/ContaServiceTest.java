@@ -36,29 +36,29 @@ public class ContaServiceTest {
     @Mock
     private ResponseBody responseBody;
 
-//    @Test
-//    public void testRefresh_SuccessScenario() throws IOException {
-//        Conta conta = new Conta();
-//        conta.setRefresh_token("mockRefreshToken");
-//        Integer contaId = 123;
-//
-//        AuthToken authToken = new AuthToken();
-//        authToken.setAccess_token("newAccessToken");
-//        authToken.setRefresh_token("newRefreshToken");
-//
-//        when(contaRepository.findById(contaId)).thenReturn(Optional.of(conta));
-//        when(okHttpClient.newCall(any(Request.class))).thenReturn(call);
-//        when(call.execute()).thenReturn(mock(Response.class));
-//        when(responseBody.string()).thenReturn("{\"access_token\":\"newAccessToken\", \"refresh_token\":\"newRefreshToken\"}");
-//
-//        Conta refreshedConta = contaService.refresh(contaId);
-//
-//        assertNotNull(refreshedConta);
-//        assertEquals("newAccessToken", refreshedConta.getAcess_token());
-//        assertEquals("newRefreshToken", refreshedConta.getRefresh_token());
-//        assertTrue(refreshedConta.getExpires().isAfter(LocalDateTime.now().minusMinutes(301)));
-//        assertTrue(refreshedConta.getExpires().isBefore(LocalDateTime.now().plusMinutes(301)));
-//    }
+    @Test
+    public void testRefresh_SuccessScenario() throws IOException {
+        Conta conta = new Conta();
+        conta.setRefresh_token("mockRefreshToken");
+        Integer contaId = 123;
+
+        AuthToken authToken = new AuthToken();
+        authToken.setAccess_token("newAccessToken");
+        authToken.setRefresh_token("newRefreshToken");
+
+        when(contaRepository.findById(contaId)).thenReturn(Optional.of(conta));
+        when(okHttpClient.newCall(any(Request.class))).thenReturn(call);
+        when(call.execute()).thenReturn(mock(Response.class));
+        when(responseBody.string()).thenReturn("{\"access_token\":\"newAccessToken\", \"refresh_token\":\"newRefreshToken\"}");
+
+        Conta refreshedConta = contaService.refresh(contaId);
+
+        assertNotNull(refreshedConta);
+        assertEquals("newAccessToken", refreshedConta.getAcess_token());
+        assertEquals("newRefreshToken", refreshedConta.getRefresh_token());
+        assertTrue(refreshedConta.getExpires().isAfter(LocalDateTime.now().minusMinutes(301)));
+        assertTrue(refreshedConta.getExpires().isBefore(LocalDateTime.now().plusMinutes(301)));
+    }
 
 //    @Test
 //    public void testRefresh_FailureScenario() throws IOException {
