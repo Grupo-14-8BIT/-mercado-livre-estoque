@@ -1,17 +1,19 @@
 package com.stock.stock.Controller;
 
 import com.stock.stock.Service.SkuSimplesService;
+import com.stock.stock.dto.SkuSimplesDTO;
 import com.stock.stock.entity.Anuncio;
 import com.stock.stock.entity.SkuSimples;
-import com.stock.stock.dto.SkuSimplesDTO;
 import com.stock.stock.repository.AnuncioRepository;
 import com.stock.stock.repository.SkuSimplesRepository;
 import com.stock.stock.user.User;
 import com.stock.stock.user.UserRepository;
 import com.stock.stock.user.config.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,7 +91,7 @@ public class SkuController {
     @PutMapping("/update")
     public ResponseEntity<String> update(
             HttpServletRequest request, @RequestParam String sku,
-            @RequestBody SkuSimplesDTO skuSimplesDTO
+            @RequestBody @Valid SkuSimplesDTO skuSimplesDTO
             ) {
 
         final String userEmail;
@@ -110,6 +112,22 @@ public class SkuController {
 
     };
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace().toString());
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleException(RuntimeException e) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMessage(e.getMessage());
+
+        return errorResponse;
+
+
+
+    }
 
 
 

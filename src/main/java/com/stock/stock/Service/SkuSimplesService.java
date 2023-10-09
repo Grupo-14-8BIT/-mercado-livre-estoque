@@ -8,10 +8,10 @@ import com.google.gson.GsonBuilder;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.stock.stock.dto.SkuSimplesDTO;
 import com.stock.stock.entity.Anuncio;
 import com.stock.stock.entity.Conta;
 import com.stock.stock.entity.SkuSimples;
-import com.stock.stock.dto.SkuSimplesDTO;
 import com.stock.stock.repository.AnuncioRepository;
 import com.stock.stock.repository.ContaRepository;
 import com.stock.stock.repository.SkuSimplesRepository;
@@ -169,7 +169,7 @@ public class SkuSimplesService {
                                   //se mlb ja cadastrado, e sku sao os mesmos -> exit
                                   Optional<Anuncio> anuncio = anuncioRepository.findAnuncioByMlb(mlb);
                                   Optional<SkuSimples> skuSimplesOptional = repository.findBySKU(sku);
-                                  if (anuncio.isPresent() || skuSimplesOptional.isPresent()){
+                                  if (anuncio.isPresent() && skuSimplesOptional.isPresent()){
                                       //se o SKU for o mesmo
                                       if (anuncio.get().getSkuSimples().getSKU() == sku) {
                                           anuncioRepository.save(anuncio.get());

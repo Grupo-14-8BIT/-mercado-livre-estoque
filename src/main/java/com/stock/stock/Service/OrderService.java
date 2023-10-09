@@ -64,7 +64,6 @@ public class OrderService {
                  Long MlbId = node.path("id").asLong();
                  Optional<SkuSimples> order_sku = skuSimplesRepository.findBySKU(node.path("order_items").path(0).path("item").path("seller_sku").asText());
                 if ( order_sku.isPresent()){
-                    SkuSimples sku = order_sku.get();
                     new_order.setSku(order_sku.get());
                 }
                  Conta conta_order = conta;

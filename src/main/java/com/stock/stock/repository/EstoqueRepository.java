@@ -15,5 +15,5 @@ public interface EstoqueRepository extends JpaRepository <Estoque, Integer> {
 List<Estoque> findAllByUser(User user);
 
 
-    Optional<Estoque> findByContasContains(Conta conta);
+    Optional<Estoque> findByConta(Conta contas);
 }

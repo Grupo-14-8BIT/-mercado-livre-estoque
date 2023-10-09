@@ -46,6 +46,8 @@ public class EstoqueService {
             Estoque novo_estoque = new Estoque();
             BeanUtils.copyProperties(estoqueDTO, novo_estoque);
             novo_estoque.setUser(user);
+            Conta novaConta = contaRepository.findById(estoqueDTO.getConta()).get();
+            novo_estoque.setConta(novaConta);
             repository.save(novo_estoque);
             return novo_estoque;
 
@@ -88,12 +90,20 @@ public class EstoqueService {
 
         EstoqueContent estoqueContent = new EstoqueContent();
 
+try {
 
-            BeanUtils.copyProperties(estoqueContentDTO, estoqueContent);
-            estoqueContent.setUser(user);
-            estoqueContentRepository.save(estoqueContent);
-            return  estoqueContent;
+    estoqueContent.setEstoque(repository.findById(estoqueContentDTO.getEstoque()).get());
+    estoqueContent.setSkuSimples(skuSimplesRepository.findBySKU(estoqueContentDTO.getSkuSimples()).get());
+    estoqueContent.setQuantidade_real(estoqueContentDTO.getQuantidade_real());
+    estoqueContent.setQantidade_deduzida(estoqueContentDTO.getQuantidade_real());
+    estoqueContent.setUser(user);
+    estoqueContentRepository.save(estoqueContent);
+    return  estoqueContent;
 
+
+} catch (Exception e) {
+    throw new RuntimeException("nao foi posivel adicionar item ao estoque");
+}
 
 
     }
@@ -119,6 +129,7 @@ public class EstoqueService {
 
         if (estoqueContent.getUser() == user) {
             BeanUtils.copyProperties(estoqueContentDTO,estoqueContent);
+            estoqueContent.setQantidade_deduzida(estoqueContentDTO.getQuantidade_real());
             estoqueContentRepository.save(estoqueContent);
             return  estoqueContent;
         } else {
@@ -142,7 +153,9 @@ public class EstoqueService {
 
         User user = order.getConta().getUsuario();
         SkuSimples skuSimples = order.getSku();
-        Estoque estoque =   repository.findByContasContains(order.getConta()).get();
+
+
+        Estoque estoque =   repository.findByConta(order.getConta()).get();
 
 
             Optional<EstoqueContent> estoqueContentOptional = estoqueContentRepository.findByUserAndSkuSimplesAndAndEstoque(user,skuSimples,estoque);

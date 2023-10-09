@@ -25,7 +25,7 @@ public class Anuncio {
 
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sku_simples")
     private SkuSimples skuSimples;
 
