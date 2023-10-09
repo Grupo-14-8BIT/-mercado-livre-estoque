@@ -21,20 +21,20 @@ public class EstoqueContent {
     @GeneratedValue(strategy = GenerationType.SEQUENCE )
     private Integer id;
 
+
     @ManyToOne
-    @JoinColumn(name = "estoque")
-    private Estoque estoque;
-    @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "usuario")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "sku")
+    @JoinColumn(name = "sku_simples")
     private SkuSimples skuSimples;
 
     private Integer quantidade_real;
 
     private Integer qantidade_deduzida;
+    @ManyToOne
+    private Estoque estoque;
 
 
 

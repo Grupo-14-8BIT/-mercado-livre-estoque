@@ -44,7 +44,7 @@ public class ContaController {
         userEmail = jwtService.extractUsername(jwt);
         Optional<User> user = userRepository.findByEmail(userEmail);
 
-      return ResponseEntity.ok(service.getAll(user.get().getId()));
+      return ResponseEntity.ok(service.getAll(Long.valueOf(user.get().getId())));
 
 
 

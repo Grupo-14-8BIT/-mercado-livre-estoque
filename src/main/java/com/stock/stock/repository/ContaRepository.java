@@ -15,4 +15,5 @@ public interface ContaRepository  extends JpaRepository <Conta, Integer> {
     List<Conta> findContasByUsuario(User usuario);
 
    Optional<Conta> findContaByContaid(Long contaid);
+
 }

@@ -111,7 +111,7 @@ public class ContaService {
 
 
 
-    public List<Conta> getAll(Integer id) {
+    public List<Conta> getAll(Long id) {
 
         List<Conta> contas = repository.findContasByUsuario(userRepository.findById(id).get());
 
@@ -183,7 +183,7 @@ public class ContaService {
 
 
 
-            conta.setUsuario_id(user.get());
+            conta.setUsuario(user.get());
 
             repository.save(conta);
 
