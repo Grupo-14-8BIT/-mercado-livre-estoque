@@ -37,7 +37,7 @@ public class Conta {
     @ManyToOne
     @JoinColumn(name = "usuario")
     private User usuario;
-    @ManyToOne
+    @OneToOne
     private Estoque estoque;
 
 

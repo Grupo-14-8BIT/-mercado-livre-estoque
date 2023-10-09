@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter @Setter
 
-public class Estoque {
+public class Estoque  implements Serializable {
 
 
     @Id
@@ -23,12 +24,12 @@ public class Estoque {
     private Integer id;
     private String nome;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario")
     private User user;
 
-    @OneToMany(mappedBy = "estoque")
-    private List<Conta> contas;
+    @OneToOne
+    private Conta conta;
 
     @OneToMany(mappedBy = "estoque")
     private List<EstoqueContent> estoqueContents;

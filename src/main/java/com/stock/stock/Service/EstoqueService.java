@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +46,8 @@ public class EstoqueService {
             Estoque novo_estoque = new Estoque();
             BeanUtils.copyProperties(estoqueDTO, novo_estoque);
             novo_estoque.setUser(user);
-            novo_estoque.setContas(contaRepository.findAllById(Collections.singleton(estoqueDTO.getConta())));
+            Conta novaConta = contaRepository.findById(estoqueDTO.getConta()).get();
+            novo_estoque.setConta(novaConta);
             repository.save(novo_estoque);
             return novo_estoque;
 
@@ -153,10 +152,9 @@ try {
 
         User user = order.getConta().getUsuario();
         SkuSimples skuSimples = order.getSku();
-       List<Conta> contas = new ArrayList<>();
-       contas.add(order.getConta());
 
-        Estoque estoque =   repository.findByContasContains(contas.get(0)).get();
+
+        Estoque estoque =   repository.findByConta(order.getConta()).get();
 
 
             Optional<EstoqueContent> estoqueContentOptional = estoqueContentRepository.findByUserAndSkuSimplesAndAndEstoque(user,skuSimples,estoque);
