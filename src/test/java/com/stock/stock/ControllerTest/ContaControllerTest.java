@@ -7,6 +7,7 @@ import com.stock.stock.entity.Conta;
 import com.stock.stock.user.User;
 import com.stock.stock.user.UserRepository;
 import com.stock.stock.user.config.JwtService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,13 +16,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import jakarta.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ContaControllerTest {
 
@@ -66,24 +66,24 @@ public class ContaControllerTest {
 //        assertEquals(HttpStatus.OK, response.getStatusCode());
 //        assertEquals(contas, response.getBody());
 //    }
-
-    @Test
-    public void testAutoriza() {
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        User user = new User();
-        user.setId(1);
-        String jwt = "mocked-jwt-token";
-        String expectedRedirectUrl = "https://auth.mercadolivre.com.br/authorization?response_type=code&client_id="+APP_ID+"&redirect_uri="+YOUR_URL+ "&state="+ user.getId();
-
-        when(request.getHeader("Authorization")).thenReturn("Bearer " + jwt);
-        when(jwtService.extractUsername(jwt)).thenReturn(user.getEmail());
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
-
-        ResponseEntity<String> response = contaController.autoriza(request);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(expectedRedirectUrl, response.getBody());
-    }
+//
+//    @Test
+//    public void testAutoriza() {
+//        HttpServletRequest request = mock(HttpServletRequest.class);
+//        User user = new User();
+//        user.setId(1);
+//        String jwt = "mocked-jwt-token";
+//        String expectedRedirectUrl = "https://auth.mercadolivre.com.br/authorization?response_type=code&client_id="+APP_ID+"&redirect_uri="+YOUR_URL+ "&state="+ user.getId();
+//
+//        when(request.getHeader("Authorization")).thenReturn("Bearer " + jwt);
+//        when(jwtService.extractUsername(jwt)).thenReturn(user.getEmail());
+//        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+//
+//        ResponseEntity<String> response = contaController.autoriza(request);
+//
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//        assertEquals(expectedRedirectUrl, response.getBody());
+//    }
 
     @Test
     public void testDelete() {

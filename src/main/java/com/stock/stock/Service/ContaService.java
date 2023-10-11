@@ -6,10 +6,8 @@ import com.stock.stock.repository.ContaRepository;
 import com.stock.stock.responses.AuthToken;
 import com.stock.stock.user.User;
 import com.stock.stock.user.UserRepository;
-import com.stock.stock.user.auth.RegisterRequest;
 import jakarta.transaction.Transactional;
 import okhttp3.*;
-import org.springdoc.core.configuration.oauth2.SpringDocOAuth2Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +42,7 @@ public class ContaService {
     @Autowired
     private UserRepository userRepository;
 
-    public ContaService(ContaRepository contaRepository, OkHttpClient okHttpClient) {
-    }
+
 
 
     // checa se esta dando o tempo de refrescar o acess token
