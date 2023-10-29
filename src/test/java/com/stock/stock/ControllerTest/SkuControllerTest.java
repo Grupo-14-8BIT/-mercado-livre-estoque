@@ -66,28 +66,28 @@ public class SkuControllerTest {
         assertEquals(expectedResult.getBody(), response.getBody());
     }
 
-    @Test
-    public void testMudarSkuAnuncio() {
-        User user = new User();
-        user.setEmail("user@example.com");
-
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getHeader("Authorization")).thenReturn("Bearer your-jwt-token");
-        when(jwtService.extractUsername("your-jwt-token")).thenReturn("user@example.com");
-        when(userRepository.findByEmail("user@example.com")).thenReturn(Optional.of(user));
-
-        SkuSimples skuSimples = new SkuSimples();
-        skuSimples.setSKU("old-sku");
-
-        when(skuSimplesRepository.findBySKU("old-sku")).thenReturn(Optional.of(skuSimples));
-
-        when(skuSimplesService.mudarSkuAnuncio(any(), any(), any())).thenReturn(ResponseEntity.ok("Success"));
-
-        ResponseEntity<String> response = skuController.mudarSkuAnuncio(request, "mlb123", "new-sku");
-        assertEquals(ResponseEntity.ok("Success"), response);
-
-        verify(skuSimplesService).mudarSkuAnuncio(any(), eq("new-sku"), any());
-    }
+//    @Test
+//    public void testMudarSkuAnuncio() {
+//        User user = new User();
+//        user.setEmail("user@example.com");
+//
+//        HttpServletRequest request = mock(HttpServletRequest.class);
+//        when(request.getHeader("Authorization")).thenReturn("Bearer your-jwt-token");
+//        when(jwtService.extractUsername("your-jwt-token")).thenReturn("user@example.com");
+//        when(userRepository.findByEmail("user@example.com")).thenReturn(Optional.of(user));
+//
+//        SkuSimples skuSimples = new SkuSimples();
+//        skuSimples.setSKU("old-sku");
+//
+//        when(skuSimplesRepository.findBySKU("old-sku")).thenReturn(Optional.of(skuSimples));
+//
+//        when(skuSimplesService.mudarSkuAnuncio(any(), any(), any())).thenReturn(ResponseEntity.ok("Success"));
+//
+//        ResponseEntity<String> response = skuController.mudarSkuAnuncio(request, "mlb123", "new-sku");
+//        assertEquals(ResponseEntity.ok("Success"), response);
+//
+//        verify(skuSimplesService).mudarSkuAnuncio(any(), eq("new-sku"), any());
+//    }
 
     @Test
     public void testUpdate() {

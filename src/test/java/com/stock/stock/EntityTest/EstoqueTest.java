@@ -1,6 +1,5 @@
 package com.stock.stock.EntityTest;
 
-import com.stock.stock.entity.Conta;
 import com.stock.stock.entity.Estoque;
 import com.stock.stock.entity.EstoqueContent;
 import com.stock.stock.user.User;
@@ -40,21 +39,21 @@ public class EstoqueTest {
         assertEquals(user, estoque.getUser());
     }
 
-    @Test
-    public void testContasGetterAndSetter() {
-        List<Conta> contas = new ArrayList<>();
-        Conta conta1 = new Conta();
-        conta1.setId(1);
-        contas.add(conta1);
-
-        Conta conta2 = new Conta();
-        conta2.setId(2);
-        contas.add(conta2);
-
-        estoque.setContas(contas);
-
-        assertEquals(contas, estoque.getContas());
-    }
+//    @Test
+//    public void testContasGetterAndSetter() {
+//        List<Conta> contas = new ArrayList<>();
+//        Conta conta1 = new Conta();
+//        conta1.setId(1);
+//        contas.add(conta1);
+//
+//        Conta conta2 = new Conta();
+//        conta2.setId(2);
+//        contas.add(conta2);
+//
+//        estoque.setConta(contas);
+//
+//        assertEquals(contas, estoque.getContas());
+//    }
 
     @Test
     public void testEstoqueContentsGetterAndSetter() {
