@@ -1,22 +1,25 @@
 package com.stock.stock.RepositoryTest;
 
+import com.stock.stock.entity.Conta;
 import com.stock.stock.entity.Estoque;
+import com.stock.stock.repository.ContaRepository;
 import com.stock.stock.user.User;
 import com.stock.stock.repository.EstoqueRepository;
 import com.stock.stock.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @DataJpaTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class EstoqueRepositoryTest {
 
     @Autowired
@@ -25,17 +28,34 @@ public class EstoqueRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    private User user;
+    @Autowired
+    private ContaRepository contaRepository;
 
-    @BeforeEach
-    public void setUp() {
-        user = new User();
-        user.setId(1);
-        user = userRepository.save(user);
+    @Test
+    public void testSaveEstoque() {
+        User user = new User();
+        user.setEmail("test@example.com");
+        user.setPassword("password");
+        userRepository.save(user);
+
+        Estoque estoque = new Estoque();
+        estoque.setNome("Test Estoque");
+        estoque.setUser(user);
+        estoqueRepository.save(estoque);
+
+        Optional<Estoque> savedEstoque = estoqueRepository.findById(estoque.getId());
+        assertTrue(savedEstoque.isPresent());
+        assertEquals("Test Estoque", savedEstoque.get().getNome());
+        assertEquals(user, savedEstoque.get().getUser());
     }
 
     @Test
     public void testFindAllByUser() {
+        User user = new User();
+        user.setEmail("test@example.com");
+        user.setPassword("password");
+        userRepository.save(user);
+
         Estoque estoque1 = new Estoque();
         estoque1.setNome("Estoque 1");
         estoque1.setUser(user);
@@ -46,10 +66,40 @@ public class EstoqueRepositoryTest {
         estoque2.setUser(user);
         estoqueRepository.save(estoque2);
 
-        List<Estoque> foundEstoques = estoqueRepository.findAllByUser(user);
+        User anotherUser = new User();
+        anotherUser.setEmail("another@example.com");
+        anotherUser.setPassword("password");
+        userRepository.save(anotherUser);
 
-        assertEquals(2, foundEstoques.size());
-        assertTrue(foundEstoques.contains(estoque1));
-        assertTrue(foundEstoques.contains(estoque2));
+        Estoque anotherUserEstoque = new Estoque();
+        anotherUserEstoque.setNome("Another User's Estoque");
+        anotherUserEstoque.setUser(anotherUser);
+        estoqueRepository.save(anotherUserEstoque);
+
+        List<Estoque> userEstoques = estoqueRepository.findAllByUser(user);
+        assertEquals(2, userEstoques.size());
+    }
+
+    @Test
+    public void testFindByContasContains() {
+        User user = new User();
+        user.setEmail("test@example.com");
+        user.setPassword("password");
+        userRepository.save(user);
+
+        Estoque estoque = new Estoque();
+        estoque.setNome("Test Estoque");
+        estoque.setUser(user);
+        estoqueRepository.save(estoque);
+
+        Conta conta = new Conta();
+        conta.setUsuario(user);
+        conta.setEstoque(estoque);
+        contaRepository.save(conta);
+
+        Optional<Estoque> foundEstoque = estoqueRepository.findByContasContains(conta);
+        assertTrue(foundEstoque.isPresent());
+        assertEquals("Test Estoque", foundEstoque.get().getNome());
+        assertEquals(user, foundEstoque.get().getUser());
     }
 }

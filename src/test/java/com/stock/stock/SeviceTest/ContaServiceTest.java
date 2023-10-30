@@ -63,7 +63,7 @@ class ContaServiceTest {
         when(userRepository.findById(1)).thenReturn(Optional.empty());
 
 
-        assertThrows(RuntimeException.class, () -> contaService.getAll(1));
+        assertThrows(RuntimeException.class, () -> contaService.getAll(1L));
     }
 
 //    @Test

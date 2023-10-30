@@ -59,7 +59,7 @@ public class ContaControllerTest {
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
         List<Conta> contas = new ArrayList<>();
-        when(contaService.getAll(user.getId())).thenReturn(contas);
+        when(contaService.getAll(user.getId().longValue())).thenReturn(contas);
 
         ResponseEntity<List<Conta>> response = contaController.getAll(request);
 

@@ -1,6 +1,5 @@
 package com.stock.stock.ControllerTest;
 
-
 import com.stock.stock.Controller.ContaController;
 import com.stock.stock.Service.ContaService;
 import com.stock.stock.entity.Conta;
@@ -43,28 +42,40 @@ public class ContaControllerTest {
     @Value("${application.YOUR_URL}")
     private String YOUR_URL;
 
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+        contaController = new ContaController();
     }
 
     @Test
     public void testGetAll() {
         HttpServletRequest request = mock(HttpServletRequest.class);
-        User user = new User();
-        String jwt = "mocked-jwt-token";
 
+        User user = new User();
+        user.setId(1); // Set user ID as needed for your test
+
+        String jwt = "mocked-jwt-token";
         when(request.getHeader("Authorization")).thenReturn("Bearer " + jwt);
         when(jwtService.extractUsername(jwt)).thenReturn(user.getEmail());
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
         List<Conta> contas = new ArrayList<>();
-        when(contaService.getAll(user.getId())).thenReturn(contas);
+        // Set up your mock contaService behavior here as needed
+        when(contaService.getAll(user.getId().longValue())).thenReturn(contas);
 
         ResponseEntity<List<Conta>> response = contaController.getAll(request);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(contas, response.getBody());
+
+        // Verify that the necessary methods were called
+        verify(request, times(1)).getHeader("Authorization");
+        verify(jwtService, times(1)).extractUsername(jwt);
+        verify(userRepository, times(1)).findByEmail(user.getEmail());
+        verify(contaService, times(1)).getAll(user.getId().longValue());
+
     }
 
     @Test
