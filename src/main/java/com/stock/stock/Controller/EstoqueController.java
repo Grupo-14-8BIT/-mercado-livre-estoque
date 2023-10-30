@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin("/*")
 @RequestMapping("/api/v1/admin/estoque")
 
 public class EstoqueController {

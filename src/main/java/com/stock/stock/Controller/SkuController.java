@@ -20,6 +20,7 @@ import java.util.Optional;
 import static org.springframework.http.ResponseEntity.badRequest;
 
 @RestController
+@CrossOrigin("/*")
 @RequestMapping("/api/v1/admin/sku")
 
 public class SkuController {
