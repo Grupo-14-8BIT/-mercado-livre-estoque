@@ -197,7 +197,7 @@ public class ContaService {
 
       Optional<Conta> conta =  repository.findById( conta_id);
 
-      if ( repository.findContasByUsuario(user).contains(conta)) {
+      if ( repository.findContasByUsuario(user).contains(conta.get())) {
 
           repository.delete(conta.get());
 

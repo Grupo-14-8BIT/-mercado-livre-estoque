@@ -10,7 +10,6 @@ import com.stock.stock.user.User;
 import com.stock.stock.user.UserRepository;
 import com.stock.stock.user.config.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,6 +21,8 @@ import java.util.Optional;
 import static org.springframework.http.ResponseEntity.badRequest;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 @RequestMapping("/api/v1/admin/sku")
 
 public class SkuController {
@@ -91,7 +92,7 @@ public class SkuController {
     @PutMapping("/update")
     public ResponseEntity<String> update(
             HttpServletRequest request, @RequestParam String sku,
-            @RequestBody @Valid SkuSimplesDTO skuSimplesDTO
+            @RequestBody SkuSimplesDTO skuSimplesDTO
             ) {
 
         final String userEmail;
