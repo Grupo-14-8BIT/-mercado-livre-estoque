@@ -1,5 +1,6 @@
 package com.stock.stock.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stock.stock.user.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Token> tokens;
 
     @Override

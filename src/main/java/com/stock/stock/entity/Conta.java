@@ -1,7 +1,6 @@
 package com.stock.stock.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.stock.stock.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,11 +34,9 @@ public class Conta {
 
     private LocalDateTime expires;
 
-
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "usuario")
-    @JsonIgnoreProperties("tokens")
-
     private User usuario;
     @OneToOne
     @JsonIgnore
