@@ -20,7 +20,7 @@ import java.util.Optional;
 import static org.springframework.http.ResponseEntity.badRequest;
 
 @RestController
-@CrossOrigin("/*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1/admin/sku")
 
 public class SkuController {
@@ -48,6 +48,7 @@ public class SkuController {
     private AnuncioRepository anuncioRepository;
 
     @GetMapping("/fetch")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<String> fetch( HttpServletRequest request) {
 
         final String userEmail;
