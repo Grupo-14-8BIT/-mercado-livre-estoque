@@ -116,7 +116,7 @@ public class ContaService {
 
         List<Conta> contas = repository.findContasByUsuario(userRepository.findById(id).get());
 
-        if ( contas !=  null && !contas.isEmpty()){
+        if ( contas !=  null || !contas.isEmpty()){
             try {
                 return  repository.findContasByUsuario(userRepository.findById(id).get());
 
