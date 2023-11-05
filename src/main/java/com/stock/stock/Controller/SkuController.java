@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.badRequest;
@@ -59,15 +60,24 @@ public class SkuController {
         userEmail = jwtService.extractUsername(jwt);
         Optional<User> user = userRepository.findByEmail(userEmail);
 
-
-
       return    service.fetch(user.get());
-
-
-
     };
 
 
+    @GetMapping("/getAll")
+    public ResponseEntity<List<SkuSimples>> Getall(HttpServletRequest request) {
+
+        final String userEmail;
+        final String jwt;
+        final String authHeader = request.getHeader("Authorization");
+        jwt = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(jwt);
+        Optional<User> user = userRepository.findByEmail(userEmail);
+
+        return service.getAll(user.get());
+    };
+
+//mudar sku do anuncio
     @GetMapping("/change")
     public ResponseEntity<String> mudarSkuAnuncio(
             HttpServletRequest request,@RequestParam String mlb, @RequestParam String sku
@@ -88,12 +98,13 @@ public class SkuController {
     };
 
 
-
+//mudar informacoes do sku
     @PutMapping("/update")
     public ResponseEntity<String> update(
             HttpServletRequest request, @RequestParam String sku,
             @RequestBody SkuSimplesDTO skuSimplesDTO
             ) {
+
 
         final String userEmail;
         final String jwt;

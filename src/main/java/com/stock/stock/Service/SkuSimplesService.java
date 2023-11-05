@@ -298,7 +298,21 @@ public class SkuSimplesService {
         return ResponseEntity.ok("SKU do anuncio  "+ anuncio.getMlb()+ "  atualizado com sucesso");
     };
 
+    public ResponseEntity<List<SkuSimples>> getAll(User user) {
 
+        List<SkuSimples> skuList = repository.findAllByUser(user);
+
+        if ( !skuList.isEmpty()) {
+
+            return ResponseEntity.ok(skuList);
+
+
+        } else {
+            throw new RuntimeException("Usuario nao tem nenhuma conta do Mercado Livre registrada");
+        }
+        
+
+    }
 
 
 }
