@@ -7,7 +7,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
@@ -15,6 +15,10 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+
+filters:
+  - name: CorsFilter
+    class: com.stock.stock.Controller.CorsFilter
 
 application:
   APP_ID: 2358645404637526

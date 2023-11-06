@@ -1,6 +1,7 @@
 package com.stock.stock.repository;
 
 import com.stock.stock.entity.Conta;
+import com.stock.stock.entity.Estoque;
 import com.stock.stock.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,11 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ContaRepository  extends JpaRepository <Conta, Integer> {
+public interface EstoqueRepository extends JpaRepository <Estoque, Integer> {
+
+List<Estoque> findAllByUser(User user);
 
 
-    List<Conta> findContasByUsuario(User usuario);
-
-   Optional<Conta> findContaByContaid(Long contaid);
-
+    Optional<Estoque> findByConta(Conta contas);
 }

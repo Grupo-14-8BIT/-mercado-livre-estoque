@@ -8,6 +8,7 @@ import com.stock.stock.user.config.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/admin/conta")
 
 public class ContaController {
@@ -33,7 +35,6 @@ public class ContaController {
 
     @Autowired
     private ContaService service;
-
     @GetMapping("/getAll")
     public ResponseEntity<List<Conta>> getAll( HttpServletRequest request) {
 
@@ -44,7 +45,7 @@ public class ContaController {
         userEmail = jwtService.extractUsername(jwt);
         Optional<User> user = userRepository.findByEmail(userEmail);
 
-      return ResponseEntity.ok(service.getAll(user.get().getId()));
+      return ResponseEntity.ok(service.getAll(Long.valueOf(user.get().getId())));
 
 
 
@@ -64,6 +65,14 @@ public class ContaController {
         return ResponseEntity.ok("https://auth.mercadolivre.com.br/authorization?response_type=code&client_id="+APP_ID+"&redirect_uri="+YOUR_URL+ "&state="+ user.get().getId());
     }
 
+    @GetMapping("/refresh")
+    public ResponseEntity<Conta> refresh (
+           @RequestParam Integer conta_id
+    ) {
+        System.out.println("refrescado:" + conta_id);
+        return ResponseEntity.ok(service.refresh(conta_id));
+
+    }
 
     @PostMapping ("/Delete")
     public  ResponseEntity<String> delete (
@@ -81,11 +90,14 @@ public class ContaController {
     }
 
 
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleException(RuntimeException e) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMessage(e.getMessage());
+
+        return errorResponse;
 
 
 
-
-
-
-
-}
+    } }

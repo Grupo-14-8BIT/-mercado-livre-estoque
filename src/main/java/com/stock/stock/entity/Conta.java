@@ -1,14 +1,20 @@
 package com.stock.stock.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stock.stock.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "conta")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter @Setter
 
 public class Conta {
 
@@ -17,12 +23,28 @@ public class Conta {
     @GeneratedValue(strategy = GenerationType.SEQUENCE )
     private Integer id;
     private String nome;
+    @Column(unique = true)
+    private Long contaid;
+    @Column(unique = true)
     private String code;
-    private String acess_token;
+    @Column(unique = true)
+    private String access_token;
+    @Column(unique = true)
     private String refresh_token;
+
+    private LocalDateTime expires;
+
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JsonIgnore
+    @JoinColumn(name = "usuario")
     private User usuario;
+    @OneToOne
+    @JsonIgnore
+    private Estoque estoque;
+
+
+
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -48,11 +70,11 @@ public class Conta {
     }
 
     public String getAcess_token() {
-        return acess_token;
+        return access_token;
     }
 
     public void setAcess_token(String acess_token) {
-        this.acess_token = acess_token;
+        this.access_token = acess_token;
     }
 
     public String getRefresh_token() {

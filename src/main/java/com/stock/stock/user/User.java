@@ -1,5 +1,6 @@
 package com.stock.stock.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stock.stock.user.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "usuario")
+
+// testar
 public class User implements UserDetails {
 
     @Id
@@ -25,13 +28,16 @@ public class User implements UserDetails {
     private Integer id;
     private String firstname;
     private String lastname;
+
+    @Column(unique = true)
     private String email;
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Token> tokens;
 
     @Override
