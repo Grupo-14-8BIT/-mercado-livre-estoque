@@ -111,6 +111,7 @@ public class ContaService {
     }
 
 
+    @Transactional
 
     public List<Conta> getAll(Long id) {
 

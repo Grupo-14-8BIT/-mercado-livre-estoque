@@ -11,6 +11,7 @@ import java.io.IOException;
 
 //testar
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
