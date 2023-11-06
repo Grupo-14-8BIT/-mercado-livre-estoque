@@ -35,7 +35,6 @@ public class ContaController {
 
     @Autowired
     private ContaService service;
-
     @GetMapping("/getAll")
     public ResponseEntity<List<Conta>> getAll( HttpServletRequest request) {
 

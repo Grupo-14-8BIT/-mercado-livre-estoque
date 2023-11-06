@@ -16,6 +16,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 
+filters:
+  - name: CorsFilter
+    class: com.stock.stock.Controller.CorsFilter
+
 application:
   APP_ID: 2358645404637526
   YOUR_URL: https://template.tr1.com.br/redirect
