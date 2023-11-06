@@ -194,7 +194,7 @@ public class     Notify {
 //        "status": "paid",
 //            "status_detail": null,
 //            "tags": [
-//        "paid",
+//                 "paid",
 //                "not_delivered",
 //                "test_order"
 //    ],
