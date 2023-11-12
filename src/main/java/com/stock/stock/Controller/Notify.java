@@ -16,6 +16,7 @@ import java.util.Optional;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/notify")
 
 public class     Notify {

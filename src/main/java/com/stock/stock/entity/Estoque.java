@@ -30,7 +30,10 @@ public class Estoque  implements Serializable {
     @JsonIgnore
     private User user;
 
-    @OneToOne
+
+    @ManyToOne
+
+    @JoinColumn(name = "conta_id")
     private Conta conta;
 
     @OneToMany(mappedBy = "estoque")

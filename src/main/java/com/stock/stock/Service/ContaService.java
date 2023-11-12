@@ -196,7 +196,7 @@ public class ContaService {
 
     public ResponseEntity<String> delete(User user, Integer conta_id) {
 
-      Optional<Conta> conta =  repository.findById( conta_id);
+      Optional<Conta> conta =  repository.findById(conta_id);
 
       if ( repository.findContasByUsuario(user).contains(conta.get())) {
 

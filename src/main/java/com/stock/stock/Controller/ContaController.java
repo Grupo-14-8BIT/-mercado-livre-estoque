@@ -1,6 +1,7 @@
 package com.stock.stock.Controller;
 
 import com.stock.stock.Service.ContaService;
+import com.stock.stock.dto.AutorizaResponse;
 import com.stock.stock.entity.Conta;
 import com.stock.stock.user.User;
 import com.stock.stock.user.UserRepository;
@@ -53,7 +54,7 @@ public class ContaController {
 
 
     @GetMapping("/autoriza")
-    public ResponseEntity<String> autoriza (
+    public ResponseEntity<AutorizaResponse> autoriza (
             HttpServletRequest request
     ) {
         final String userEmail;
@@ -62,7 +63,9 @@ public class ContaController {
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
         Optional<User> user = userRepository.findByEmail(userEmail);
-        return ResponseEntity.ok("https://auth.mercadolivre.com.br/authorization?response_type=code&client_id="+APP_ID+"&redirect_uri="+YOUR_URL+ "&state="+ user.get().getId());
+        AutorizaResponse autoriza = new AutorizaResponse();
+        autoriza.setRedirect("https://auth.mercadolivre.com.br/authorization?response_type=code&client_id="+APP_ID+"&redirect_uri="+YOUR_URL+ "&state="+ user.get().getId());
+        return ResponseEntity.ok(autoriza);
     }
 
     @GetMapping("/refresh")
@@ -74,7 +77,7 @@ public class ContaController {
 
     }
 
-    @PostMapping ("/Delete")
+    @DeleteMapping ("/Delete")
     public  ResponseEntity<String> delete (
             HttpServletRequest request, @RequestParam Integer conta_id
     ) {

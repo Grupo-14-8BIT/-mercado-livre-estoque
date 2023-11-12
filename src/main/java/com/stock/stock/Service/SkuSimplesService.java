@@ -18,6 +18,7 @@ import com.stock.stock.repository.SkuSimplesRepository;
 import com.stock.stock.responses.ListItems;
 import com.stock.stock.user.User;
 import com.stock.stock.user.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -247,20 +248,22 @@ public class SkuSimplesService {
 
 
     }
-
-    public ResponseEntity<String> update (SkuSimplesDTO skuSimplesDTO, String sku) {
+@Transactional
+    public ResponseEntity<String> update (SkuSimplesDTO skuNovo, String sku) {
 
         Optional<SkuSimples> skuOptional = repository.findBySKU(sku);
         if( skuOptional.isPresent()) {
+            skuOptional.get().setSKU(skuNovo.getSKU());
+            skuOptional.get().setNome(skuNovo.getNome());
+            skuOptional.get().setDescricao(skuNovo.getDescricao());
+            skuOptional.get().setFoto(skuNovo.getFoto());
+            repository.save(skuOptional.get());
+
             List<Anuncio> anuncioList = anuncioRepository.findAllBySkuSimples(skuOptional.get());
             anuncioList.forEach(anuncio -> {
-                mudarSkuAnuncio(anuncio,skuSimplesDTO.getSKU(),anuncio.getConta());
+                mudarSkuAnuncio(anuncio,skuNovo.getSKU(),anuncio.getConta());
             });
-            skuOptional.get().setSKU(skuSimplesDTO.getSKU());
-            skuOptional.get().setNome(skuSimplesDTO.getNome());
-            skuOptional.get().setDescricao(skuSimplesDTO.getDescricao());
-            skuOptional.get().setFoto(skuSimplesDTO.getFoto());
-            repository.save(skuOptional.get());
+
         } else {
             return ResponseEntity.badRequest().body("sku nao existe");
         }
