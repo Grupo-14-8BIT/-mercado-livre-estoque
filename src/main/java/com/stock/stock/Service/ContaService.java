@@ -1,7 +1,9 @@
 package com.stock.stock.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.stock.stock.entity.Anuncio;
 import com.stock.stock.entity.Conta;
+import com.stock.stock.repository.AnuncioRepository;
 import com.stock.stock.repository.ContaRepository;
 import com.stock.stock.responses.AuthToken;
 import com.stock.stock.user.User;
@@ -41,8 +43,8 @@ public class ContaService {
 
     @Autowired
     private UserRepository userRepository;
-
-
+    @Autowired
+    private AnuncioRepository anuncioRepository;
 
 
     // checa se esta dando o tempo de refrescar o acess token
@@ -199,8 +201,17 @@ public class ContaService {
       Optional<Conta> conta =  repository.findById(conta_id);
 
       if ( repository.findContasByUsuario(user).contains(conta.get())) {
+          List<Anuncio> anuncios = anuncioRepository.findAllByContaId(conta_id);
+
+          for (Anuncio anuncio : anuncios) {
+              anuncioRepository.delete(anuncio);
+          }
+
+
 
           repository.delete(conta.get());
+
+
 
           return ResponseEntity.ok("Conta desvinculada com sucesso");
 

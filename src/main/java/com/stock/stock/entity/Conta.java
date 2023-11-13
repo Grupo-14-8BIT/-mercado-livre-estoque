@@ -38,7 +38,7 @@ public class Conta {
     @JsonIgnore
     @JoinColumn(name = "usuario")
     private User usuario;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Estoque estoque;
 

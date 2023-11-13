@@ -16,5 +16,7 @@ public interface AnuncioRepository extends JpaRepository <Anuncio, Integer> {
 
     List<Anuncio> findAllBySkuSimples(SkuSimples skuSimples);
 
+    List<Anuncio> findAllByContaId(Integer ContaId);
+
 
 }

@@ -19,7 +19,9 @@ public class Anuncio {
     private Long id;
 
     private String mlb;
-    @ManyToOne
+
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "conta")
     private Conta conta;
 
