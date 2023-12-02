@@ -164,22 +164,36 @@ public class EstoqueController {
     }
 
 
-    @PostMapping("/updateContent")
+    @PutMapping("/updateContent")
     public ResponseEntity<EstoqueContent> updateContent(
             HttpServletRequest request, @RequestBody @Valid EstoqueContentDTO estoqueContentDTO,
             @RequestParam Integer id
 
     ){
-        final String userEmail;
-        final String jwt;
-        final String authHeader = request.getHeader("Authorization");
-        jwt = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(jwt);
-        Optional<User> user = userRepository.findByEmail(userEmail);
-        Optional<EstoqueContent> estoqueContent = estoqueContentRepository.findById(id);
+
+
+        try {
+            final String userEmail;
+            final String jwt;
+            final String authHeader = request.getHeader("Authorization");
+            jwt = authHeader.substring(7);
+            userEmail = jwtService.extractUsername(jwt);
+            Optional<User> user = userRepository.findByEmail(userEmail);
+            Optional<EstoqueContent> estoqueContent = estoqueContentRepository.findById(id);
 
             return ResponseEntity.ok().body(service.updateContent(estoqueContentDTO,estoqueContent.get(),user.get()));
 
+
+        }catch(Exception ex){
+            System.out.println(id);
+            System.out.println();
+            System.out.println(ex.getMessage());
+            System.out.println(estoqueContentDTO.getQuantidade_real());
+            System.out.println(estoqueContentDTO.getSkuSimples());
+            System.out.println(estoqueContentDTO.getEstoque());
+
+            return null;
+        }
 
     }
 
