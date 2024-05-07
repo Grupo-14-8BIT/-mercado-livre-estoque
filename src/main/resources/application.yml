@@ -17,6 +17,13 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+logging:
+  level:
+    root: TRACE
+  file:
+    name: logging.log
+  pattern:
+    console: "%d{yyy-MM-DD HH:mm} == %logger{40} >>> %msg%n"
 
 filters:
   - name: CorsFilter
