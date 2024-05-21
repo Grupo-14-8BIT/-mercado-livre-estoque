@@ -14,7 +14,8 @@ import java.io.IOException;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class AuthenticationController {
+public class ok
+        AuthenticationController {
 
   private final AuthenticationService service;
 
