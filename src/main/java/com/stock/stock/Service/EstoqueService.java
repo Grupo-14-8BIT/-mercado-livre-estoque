@@ -4,8 +4,6 @@ import com.stock.stock.dto.EstoqueContentDTO;
 import com.stock.stock.dto.EstoqueDTO;
 import com.stock.stock.entity.*;
 import com.stock.stock.repository.*;
-import com.stock.stock.user.User;
-import com.stock.stock.user.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

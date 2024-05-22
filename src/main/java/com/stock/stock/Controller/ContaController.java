@@ -1,16 +1,16 @@
 package com.stock.stock.Controller;
 
 import com.stock.stock.Service.ContaService;
+import com.stock.stock.Service.UserRepository;
 import com.stock.stock.dto.AutorizaResponse;
 import com.stock.stock.entity.Conta;
-import com.stock.stock.user.User;
-import com.stock.stock.user.UserRepository;
-import com.stock.stock.user.config.JwtService;
+import com.stock.stock.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class ContaController {
     private String YOUR_URL;
 
     @Autowired
-    private JwtService jwtService;
+    private com.stock.stock.Service.JwtService jwtService;
 
     @Autowired
     private UserRepository userRepository;

@@ -1,7 +1,7 @@
 package com.stock.stock.repository;
 
 import com.stock.stock.entity.SkuSimples;
-import com.stock.stock.user.User;
+import com.stock.stock.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

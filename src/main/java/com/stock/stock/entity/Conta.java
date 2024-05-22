@@ -1,7 +1,6 @@
 package com.stock.stock.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.stock.stock.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

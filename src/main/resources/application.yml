@@ -1,7 +1,13 @@
 
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://192.168.56.104:8080/realms/stock
+          jwk-set-uri: http://192.168.56.104:8080/realms/stock/protocol/openid-connect/certs
   datasource:
-    url: jdbc:postgresql://localhost:5432/stock2
+    url: jdbc:postgresql://192.168.56.106:5432/stock2
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver

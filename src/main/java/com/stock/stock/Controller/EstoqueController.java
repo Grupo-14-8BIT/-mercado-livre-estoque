@@ -2,15 +2,16 @@ package com.stock.stock.Controller;
 
 import com.stock.stock.Service.ContaService;
 import com.stock.stock.Service.EstoqueService;
+import com.stock.stock.Service.JwtService;
+import com.stock.stock.Service.UserRepository;
 import com.stock.stock.dto.EstoqueContentDTO;
 import com.stock.stock.dto.EstoqueDTO;
 import com.stock.stock.entity.Estoque;
 import com.stock.stock.entity.EstoqueContent;
+import com.stock.stock.entity.User;
 import com.stock.stock.repository.EstoqueContentRepository;
 import com.stock.stock.repository.EstoqueRepository;
-import com.stock.stock.user.User;
-import com.stock.stock.user.UserRepository;
-import com.stock.stock.user.config.JwtService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

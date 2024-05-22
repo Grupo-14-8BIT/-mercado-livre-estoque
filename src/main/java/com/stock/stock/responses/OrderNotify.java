@@ -2,7 +2,7 @@ package com.stock.stock.responses;
 
 import com.stock.stock.entity.Conta;
 import com.stock.stock.entity.Order;
-import com.stock.stock.user.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

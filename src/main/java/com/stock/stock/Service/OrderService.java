@@ -13,7 +13,6 @@ import com.stock.stock.repository.AnuncioRepository;
 import com.stock.stock.repository.ContaRepository;
 import com.stock.stock.repository.OrderRepository;
 import com.stock.stock.repository.SkuSimplesRepository;
-import com.stock.stock.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

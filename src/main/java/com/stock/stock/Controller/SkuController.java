@@ -1,19 +1,20 @@
 package com.stock.stock.Controller;
 
+import com.stock.stock.Service.JwtService;
 import com.stock.stock.Service.SkuSimplesService;
+import com.stock.stock.Service.UserRepository;
 import com.stock.stock.dto.SkuSimplesDTO;
 import com.stock.stock.entity.Anuncio;
 import com.stock.stock.entity.SkuSimples;
+import com.stock.stock.entity.User;
 import com.stock.stock.repository.AnuncioRepository;
 import com.stock.stock.repository.SkuSimplesRepository;
-import com.stock.stock.user.User;
-import com.stock.stock.user.UserRepository;
-import com.stock.stock.user.config.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,6 +52,7 @@ public class SkuController {
     private AnuncioRepository anuncioRepository;
 
     @GetMapping("/fetch")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<String> fetch( HttpServletRequest request) {
 
         final String userEmail;
