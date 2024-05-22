@@ -4,6 +4,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -15,15 +16,14 @@ import org.springframework.web.client.RestTemplate;
 public class TokenController {
 
     @GetMapping("/admin")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @Secured({"ADMIN"})
 
     public String admin () {
         String mensagem = "voce é um admin";
 
         return mensagem;
     }
-    @PostMapping("/")
-    @PreAuthorize("permitAll()")
+    @PostMapping("/login")
 
     public ResponseEntity<String> token (@RequestBody User user){
 

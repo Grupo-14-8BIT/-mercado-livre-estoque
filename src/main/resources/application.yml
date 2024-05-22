@@ -1,4 +1,10 @@
 
+jwt:
+  auth:
+    converter:
+      resource-id: stock_client
+      princicple-attribute: preferred_username
+
 spring:
   security:
     oauth2:
