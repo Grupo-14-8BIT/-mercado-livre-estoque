@@ -39,7 +39,7 @@ public class TokenController {
         formData.add("client_secret", user.secret);
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(formData, headers);
 
-       var result = rt.postForEntity( "http://192.168.56.104:8080/realms/stock/protocol/openid-connect/token",entity, String.class);
+       var result = rt.postForEntity( "http://keycloak:8080/realms/stock/protocol/openid-connect/token",entity, String.class);
         return  result;
     }
 
